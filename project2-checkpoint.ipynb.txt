@@ -1,0 +1,57 @@
+web scraping (handling python with csv files)
+
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+# Base URL for BBC news
+BASE_URL = "https://www.bbc.com/news"
+
+# Function to extract news details
+def get_BBC_news_details(page_url):
+    # Mock data for testing
+    mock_data = [
+        {
+            "headline": "Snow, floods, playhouses and a beaver",
+            "publication date": "12 Jan 2025",
+            "article URL": "https://bbc.com/news/articles/c8dqvllveqlo"
+        },
+        {
+            "headline": "Scientists work on 'superhuman' vision systems for robots",
+            "publication date": "13 Feb 2025",
+            "article URL": "https://bbc.com/news/articles/cm2l1y73mz1o"
+        },
+        {
+            "headline": "AI experts warn electricity costs may stunt growth",
+            "publication date": "16 Feb 2025",
+            "article URL": "https://bbc.com/news/articles/c20g3dr4n4no"
+        }
+    ]
+       return mock_data
+
+# Scrape multiple pages (if pagination exists)
+def scrape_BBC_news_pages(pages=4):
+    all_data = []
+    for page in range(1, pages + 1):
+        print(f"Scraping page {page}...")
+        url = f"{BASE_URL}?_pgn={page}"  # Pagination format (if applicable)
+        all_data.extend(get_BBC_news_details(url))
+    
+    return all_data
+
+# Get news data
+news_data = scrape_BBC_news_pages()
+
+# Save to CSV
+df = pd.DataFrame(news_data)
+df.to_csv("BBCnews.csv", index=False)
+print("Data saved to BBCnews.csv")
+
+
+output:
+
+Scraping page 1...
+Scraping page 2...
+Scraping page 3...
+Scraping page 4...
+Data saved to BBCnews.csv
